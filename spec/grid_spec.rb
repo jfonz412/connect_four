@@ -8,7 +8,7 @@ describe Grid do
         expect(subject.slots).to be_a(Array)
       end
       it "creates a 7x6 multidimensional array" do
-        expect(subject.slots[5][6]).to eql(" ")
+        expect(subject.slots[5][6]).to eql("| ")
       end
     end
   end
@@ -43,15 +43,28 @@ describe Grid do
   	context "given an available space" do
   	  it "updates the grid" do
   	  	expect(subject.update_grid(4,piece)).to be true
-  	  	expect(subject.slots[5][3]).to eql("\u{26aa}")
+  	  	expect(subject.slots[5][3]).to eql("|\u{26aa}")
 
   	  	expect(subject.update_grid(1,piece)).to be true
-  	  	expect(subject.slots[5][0]).to eql("\u{26aa}")
+  	  	expect(subject.slots[5][0]).to eql("|\u{26aa}")
 
   	  	expect(subject.update_grid(1,piece)).to be true
-  	  	expect(subject.slots[4][0]).to eql("\u{26aa}")
+  	  	expect(subject.slots[4][0]).to eql("|\u{26aa}")
 
-  	  	expect(subject.slots[3][0]).to eql(" ")
+  	  	expect(subject.slots[3][0]).to eql("| ")
+  	  end
+  	end
+
+    # Fill one entire column before next test
+    before do 
+      6.times do
+      	subject.update_grid(5,piece)
+      end
+    end
+
+  	context "given a full row" do
+  	  it "returns false" do
+  	  	expect(subject.update_grid(5,piece)).to be false
   	  end
   	end
   end
